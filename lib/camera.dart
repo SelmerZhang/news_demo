@@ -5,10 +5,10 @@ import 'dart:async';
 
 class CameraPage extends StatefulWidget {
   @override
-  CameraPageState createState() => new CameraPageState();
+  _CameraPageState createState() => new _CameraPageState();
 }
 
-class CameraPageState extends State<CameraPage> {
+class _CameraPageState extends State<CameraPage> {
   File _image;
 
   Future getImage() async {
@@ -25,10 +25,13 @@ class CameraPageState extends State<CameraPage> {
       appBar: new AppBar(
         title: new Text('Image Picker Example'),
       ),
-      body: new Center(
-        child: _image == null
-            ? new Text('No image selected.')
-            : new Image.file(_image),
+      body: new Padding(
+        padding: EdgeInsets.all(50.0),
+        child: new Center(
+          child: _image == null
+              ? new Text('No image selected.')
+              : new Image.file(_image),
+        ),
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: getImage,

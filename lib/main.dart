@@ -3,6 +3,9 @@ import 'tab_controller_demo.dart';
 import 'UI/UI_show_tabbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'camera.dart';
+import 'scan_barcode.dart';
+import 'video.dart';
+import 'audio.dart';
 
 void main() => runApp(new MyApp());
 
@@ -19,7 +22,9 @@ class MyApp extends StatelessWidget {
         '/ui': (_) => new ShowUIPage(),
         '/tabbar/index': (_) => new TabBarDemo(),
         '/camera': (_) => new CameraPage(),
-        //'/staticvalue': (_) => new StaticValuePage(),
+        '/scanner': (_) => new BarcodeScannerPage(),
+        '/video': (_) => new VideoPage(),
+        '/audio': (_) => new AudioApp(),
       },
     );
   }
@@ -35,9 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // 这个key用来在不是手动下拉，而是点击某个button或其它操作时，代码直接触发下拉刷新
-  //final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  //new GlobalKey<RefreshIndicatorState>();
 
   List<Map<String, String>> list = <Map<String, String>>[];
 
@@ -47,17 +49,9 @@ class _MyHomePageState extends State<MyHomePage> {
     list.add({"title": 'UI', 'router': '/ui'});
     list.add({"title": '网络应用', 'router': '/tabbar/index'});
     list.add({"title": '照相机', 'router': '/camera'});
-    /*list.add({"title": 'TextStyle', 'type': 'ts', 'router': '/text/style'});
-    list.add({"title": '上拉加载更多', 'type': 'lm', 'router': '/load/more'});
-    list.add({"title": 'ListView', 'type': 'list', 'router': '/list/index'});
-    list.add({"title": '使用主题', 'type': 'theme', 'router': '/theme/index'});
-    list.add(
-        {"title": 'SnackBar', 'type': 'snackbar', 'router': '/snackbar/index'});
-    
-    list.add(
-        {"title": '底部tab切换', 'type': 'tabbarb', 'router': '/tabbar/bottom'});
-    list.add(
-        {"title": '静态变量bug', 'type': 'staticvalue', 'router': '/staticvalue'});*/
+    list.add({"title": '二维码', 'router': '/scanner'});
+    list.add({"title": '视频播放', 'router': '/video'});
+    list.add({"title": '音频播放', 'router': '/audio'});
   }
 
   @override

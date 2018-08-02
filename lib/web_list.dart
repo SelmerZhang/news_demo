@@ -12,11 +12,12 @@ class HomePage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return new HomeState();
+    print('build homepage');
+    return new _HomeState();
   }
 }
 
-class HomeState extends State<HomePage> {
+class _HomeState extends State<HomePage> {
   //List data;
   Map<String, dynamic> data;
   String fileDir;
@@ -287,6 +288,7 @@ class LikedPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
+    print('build likedpage');
     return new LikedPageState();
   }
 }

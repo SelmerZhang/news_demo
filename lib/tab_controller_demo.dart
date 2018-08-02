@@ -7,11 +7,11 @@ class TabBarDemo extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    return new TabBarDemoState();
+    return new _TabBarDemoState();
   }
 }
 
-class TabBarDemoState extends State<TabBarDemo>
+class _TabBarDemoState extends State<TabBarDemo>
     with SingleTickerProviderStateMixin {
   TabController _tabController;
 
