@@ -26,6 +26,7 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     // TODO: implement initState
+    print(this.hashCode);
     super.initState();
     _getFilePath();
     _httpClient();
@@ -106,12 +107,12 @@ class _HomeState extends State<HomePage> {
       List<Widget> mod = module.map((item) {
         TabBarDemo.urlList.add(item);
         //读到的数据可能存在所有值为null的脏数据，需要去掉
-        if(item["title"]==null){
-            return new Container();
+        if (item["title"] == null) {
+          return new Container();
         }
         return new Card(
           child: new Padding(
-            padding: const EdgeInsets.all(7.0),
+            padding: const EdgeInsets.fromLTRB(7.0, 0.0, 7.0, 0.0),
             child: _getRowWidget(item),
           ),
           elevation: 5.0,
@@ -149,7 +150,31 @@ class _HomeState extends State<HomePage> {
           child: new Column(
             children: <Widget>[
               new Container(
-                alignment: Alignment.centerLeft,
+                //alignment: Alignment.centerLeft,
+                child: new GestureDetector(
+                  //该组件对应可以相应相关动作，对组件进行了一层包装
+                  onTap: () {
+                    //点击事件最终会触发该方法
+                    if (item["picInfo"].length > 0)
+                      launch("${item["picInfo"][0]["url"]}");
+                  },
+                  child: new ClipRect(
+                    child: //new Image.file(file_dir), 验证图片下载与本地io是否成功
+                        new FadeInImage.assetNetwork(
+                      placeholder: "images/ic_shop_normal.png",
+                      //从网站上读的数据存在部分没有图片，需要判断
+                      image: item["picInfo"].length == 0
+                          ? "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532698709281&di=b19d89c4889006966a4ace22c40a197c&imgtype=0&src=http%3A%2F%2Fimgqn.koudaitong.com%2Fupload_files%2F2015%2F04%2F08%2FFkcwV9ezJBjSDEXATlHuCh_4J589.jpg%2521580x580.jpg"
+                          : "${item["picInfo"][0]["url"]}",
+                      width: 150.0,
+                      height: 90.0,
+                      fit: BoxFit.fitWidth,
+                    ),
+                  ),
+                ),
+              ),
+              new Container(
+                //alignment: Alignment.centerLeft,
                 child: new GestureDetector(
                   //该组件对应可以相应相关动作，对组件进行了一层包装
                   onTap: () {
@@ -254,30 +279,6 @@ class _HomeState extends State<HomePage> {
             crossAxisAlignment: CrossAxisAlignment.start,
           ),
         ),
-        new Container(
-          alignment: Alignment.centerLeft,
-          child: new GestureDetector(
-            //该组件对应可以相应相关动作，对组件进行了一层包装
-            onTap: () {
-              //点击事件最终会触发该方法
-              if (item["picInfo"].length > 0)
-                launch("${item["picInfo"][0]["url"]}");
-            },
-            child: new ClipRect(
-              child: //new Image.file(file_dir), 验证图片下载与本地io是否成功
-                  new FadeInImage.assetNetwork(
-                placeholder: "images/ic_shop_normal.png",
-                //从网站上读的数据存在部分没有图片，需要判断
-                image: item["picInfo"].length == 0
-                    ? "https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1532698709281&di=b19d89c4889006966a4ace22c40a197c&imgtype=0&src=http%3A%2F%2Fimgqn.koudaitong.com%2Fupload_files%2F2015%2F04%2F08%2FFkcwV9ezJBjSDEXATlHuCh_4J589.jpg%2521580x580.jpg"
-                    : "${item["picInfo"][0]["url"]}",
-                width: 150.0,
-                height: 90.0,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
-          ),
-        ),
       ],
     );
   }
@@ -288,7 +289,7 @@ class LikedPage extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    print('build likedpage');
+    print('build likedpage, ${this.hashCode}');
     return new LikedPageState();
   }
 }
@@ -302,6 +303,10 @@ class LikedPageState extends State<LikedPage> {
     // TODO: implement initState
     super.initState();
     _getFilePath();
+  }
+
+  void dispose() {
+    super.dispose();
   }
 
   //获取文件路径
@@ -324,14 +329,14 @@ class LikedPageState extends State<LikedPage> {
 
   ListView _getItem() {
     return new ListView.builder(
-        padding: const EdgeInsets.all(16.0),
+        //padding: const EdgeInsets.all(6.0),
         // 对于每个item都会调用itemBuilder
         itemBuilder: (context, i) {
           //itemBuilder是一个匿名的回调函数
           if (i.isOdd)
             return new Divider(
               height: 30.0,
-              color: Colors.lightGreen,
+              color: Colors.white70,
             );
           // 语法 "i ~/ 2" 表示i除以2，但返回值是整形（向下取整）
           final index = i ~/ 2;
@@ -366,6 +371,27 @@ class LikedPageState extends State<LikedPage> {
     }).contains(item["docid"]);
     return new Row(
       children: <Widget>[
+          new Container(
+              margin: EdgeInsets.fromLTRB(7.0,0.0,0.0,0.0),
+          alignment: Alignment.centerLeft,
+          child: new GestureDetector(
+            //该组件对应可以相应相关动作，对组件进行了一层包装
+            onTap: () {
+              //点击事件最终会触发该方法
+              if (item["picInfo"].length > 0)
+                launch("${item["picInfo"][0]["url"]}");
+            },
+            child: new ClipRect(
+              child: new Image(
+                image: new FileImage(File("$fileDir/${item["docid"]}.png")),
+                width: 150.0,
+                height: 90.0,
+                fit: BoxFit.fitWidth,
+              ),
+            ),
+          ),
+        ),
+        Container(width: 15.0,),
         new Flexible(
           flex: 1,
           fit: FlexFit.tight,
@@ -476,25 +502,6 @@ class LikedPageState extends State<LikedPage> {
               )
             ],
             crossAxisAlignment: CrossAxisAlignment.start,
-          ),
-        ),
-        new Container(
-          alignment: Alignment.centerLeft,
-          child: new GestureDetector(
-            //该组件对应可以相应相关动作，对组件进行了一层包装
-            onTap: () {
-              //点击事件最终会触发该方法
-              if (item["picInfo"].length > 0)
-                launch("${item["picInfo"][0]["url"]}");
-            },
-            child: new ClipRect(
-              child: new Image(
-                image: new FileImage(File("$fileDir/${item["docid"]}.png")),
-                width: 150.0,
-                height: 90.0,
-                fit: BoxFit.fitWidth,
-              ),
-            ),
           ),
         ),
       ],

@@ -5,6 +5,7 @@ class UIpage1 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
+    print('bulid page1');
     return new UIpageState1();
   }
 }

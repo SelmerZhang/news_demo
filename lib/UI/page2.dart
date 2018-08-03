@@ -4,6 +4,7 @@ import 'dart:async';
 class UIpage2 extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
+      print('bulid page2');
     return new UIPageState2();
   }
 }
